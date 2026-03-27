@@ -405,7 +405,6 @@ footer p{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.18)}
   .port-head{flex-direction:column;align-items:flex-start;gap:12px}
   .fbtns{width:100%;flex-wrap:wrap;gap:8px}
   .fb{flex:1;min-width:140px;text-align:center}
-  .mute-btn{display:none}
 
   /* ── ABOUT SECTION ── */
   .about-wrap{grid-template-columns:1fr;gap:28px;padding:60px 20px;text-align:center}
@@ -919,14 +918,6 @@ portfolioVideos.forEach(video => {
 const portfolioCards = document.querySelectorAll('.pc');
 const videoOverlay = document.getElementById('videoOverlay');
 let currentExpandedCard = null;
-
-function setMuteIcon(btn, muted) {
-  if (!btn) return;
-  btn.innerHTML = muted
-    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h4l5-4v14l-5-4H5z"/><path d="M16 9l4 4m0-4l-4 4"/></svg>'
-    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h4l5-4v14l-5-4H5z"/><path d="M16 8a4 4 0 0 1 0 8"/><path d="M18 5a7 7 0 0 1 0 14"/></svg>';
-}
-
 
 // Function to reset all cards to normal state
 function resetAllCards() {
