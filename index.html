@@ -175,6 +175,16 @@ nav::after{content:'';position:absolute;bottom:0;left:60px;right:60px;height:1px
 .about-badge{position:absolute;bottom:28px;right:28px;border:1px solid rgba(58,141,255,.3);padding:14px 18px;background:rgba(8,8,8,.88);backdrop-filter:blur(10px);z-index:2}
 .about-badge .n{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--blue);line-height:1}
 .about-badge .l{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--grey)}
+.about-badge{animation:badgeFloat 4s ease-in-out infinite;box-shadow:0 0 18px rgba(58,141,255,.28)}
+.about-badge .n{animation:badgePulse 2.4s ease-in-out infinite}
+@keyframes badgeFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+@keyframes badgePulse{
+  0%,100%{text-shadow:0 0 0 rgba(58,141,255,.0)}
+  50%{text-shadow:0 0 18px rgba(58,141,255,.6)}
+}
 .about-text p{font-size:14px;line-height:2;color:rgba(255,255,255,.45);font-weight:300;margin-bottom:22px}
 .astats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px}
 .stn{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;color:var(--white)}
