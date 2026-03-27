@@ -405,8 +405,7 @@ footer p{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.18)}
   .port-head{flex-direction:column;align-items:flex-start;gap:12px}
   .fbtns{width:100%;flex-wrap:wrap;gap:8px}
   .fb{flex:1;min-width:140px;text-align:center}
-  .mute-btn{position:absolute;top:12px;right:12px;z-index:4;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:0}
-  .mute-btn svg{width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none}
+  .mute-btn{display:none}
 
   /* ── ABOUT SECTION ── */
   .about-wrap{grid-template-columns:1fr;gap:28px;padding:60px 20px;text-align:center}
@@ -906,23 +905,8 @@ function muteAllVideos(exceptVideo = null) {
 // Add click event listeners to all videos for sound toggle
 portfolioVideos.forEach(video => {
   video.addEventListener('click', () => {
-    if (isMobile) {
-      const card = video.closest('.pc');
-      if (card) expandCard(card);
-      return;
-    }
-    if (video.muted) {
-      // Unmute this video and mute all others
-      video.muted = false;
-      currentPlayingVideo = video;
-      muteAllVideos(video);
-    } else {
-      // Mute this video
-      video.muted = true;
-      currentPlayingVideo = null;
-    }
-    const btn = video.closest('.pc')?.querySelector('.mute-btn');
-    if (btn) setMuteIcon(btn, video.muted);
+    const card = video.closest('.pc');
+    if (card) expandCard(card);
   });
   
   // Add hover effect for better UX
@@ -943,30 +927,6 @@ function setMuteIcon(btn, muted) {
     : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h4l5-4v14l-5-4H5z"/><path d="M16 8a4 4 0 0 1 0 8"/><path d="M18 5a7 7 0 0 1 0 14"/></svg>';
 }
 
-// Mobile-only: add a mute/unmute button on each card
-if (isMobile) {
-  portfolioCards.forEach(card => {
-    if (card.querySelector('.mute-btn')) return;
-    const btn = document.createElement('button');
-    btn.className = 'mute-btn';
-    const video = card.querySelector('.pc-video, .pc-gdrive video');
-    setMuteIcon(btn, !video || video.muted);
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      if (!video) return;
-      if (video.muted) {
-        video.muted = false;
-        muteAllVideos(video);
-        setMuteIcon(btn, false);
-      } else {
-        video.muted = true;
-        setMuteIcon(btn, true);
-      }
-    });
-    card.appendChild(btn);
-  });
-}
 
 // Function to reset all cards to normal state
 function resetAllCards() {
