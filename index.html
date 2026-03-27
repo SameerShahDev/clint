@@ -950,6 +950,7 @@ function expandCard(card) {
   if (video) {
     video.preload = 'auto';
     video.muted = false;
+    video.volume = 1;
     // Ensure video plays when expanded; fallback to muted playback if needed
     const playAttempt = video.play();
     if (playAttempt && typeof playAttempt.catch === 'function') {
@@ -969,39 +970,18 @@ function expandCard(card) {
   document.body.style.overflow = 'hidden';
 }
 
-// Add click/touch event listeners to portfolio cards
+// Add click event listeners to portfolio cards (no touchstart to avoid accidental opens on scroll)
 portfolioCards.forEach(card => {
-  // Handle both click and touch events for mobile
   const handleCardClick = (e) => {
-    // Don't trigger if clicking on close button
     if (e.target.closest('.close-video')) return;
-    
-    // Prevent default on touch to avoid double-tap zoom
-    if (e.type === 'touchstart') {
-      e.preventDefault();
-    }
-    
     if (currentExpandedCard === card) {
-      // If already expanded, close it
       resetAllCards();
       document.body.style.overflow = '';
     } else {
-      // Expand this card
       expandCard(card);
     }
   };
-  
   card.addEventListener('click', handleCardClick);
-  card.addEventListener('touchstart', handleCardClick, { passive: false });
-  
-  // Add touch feedback for mobile
-  card.addEventListener('touchstart', () => {
-    card.style.transform = 'scale(0.98)';
-  }, { passive: true });
-  
-  card.addEventListener('touchend', () => {
-    card.style.transform = '';
-  }, { passive: true });
 });
 
 // Add click/touch event listeners to close buttons
