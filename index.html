@@ -928,6 +928,7 @@ portfolioVideos.forEach(video => {
 const portfolioCards = document.querySelectorAll('.pc');
 const videoOverlay = document.getElementById('videoOverlay');
 let currentExpandedCard = null;
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 // Function to reset all cards to normal state
 function resetAllCards() {
@@ -974,6 +975,7 @@ function expandCard(card) {
 portfolioCards.forEach(card => {
   // Handle both click and touch events for mobile
   const handleCardClick = (e) => {
+    if (isMobile) return; // mobile: no preview expand
     // Don't trigger if clicking on close button
     if (e.target.closest('.close-video')) return;
     
@@ -992,8 +994,10 @@ portfolioCards.forEach(card => {
     }
   };
   
-  card.addEventListener('click', handleCardClick);
-  card.addEventListener('touchstart', handleCardClick, { passive: false });
+  if (!isMobile) {
+    card.addEventListener('click', handleCardClick);
+    card.addEventListener('touchstart', handleCardClick, { passive: false });
+  }
   
   // Add touch feedback for mobile
   card.addEventListener('touchstart', () => {
@@ -1014,8 +1018,10 @@ document.querySelectorAll('.close-video').forEach(closeBtn => {
     document.body.style.overflow = '';
   };
   
-  closeBtn.addEventListener('click', handleClose);
-  closeBtn.addEventListener('touchstart', handleClose, { passive: false });
+  if (!isMobile) {
+    closeBtn.addEventListener('click', handleClose);
+    closeBtn.addEventListener('touchstart', handleClose, { passive: false });
+  }
   
   // Add touch feedback
   closeBtn.addEventListener('touchstart', () => {
@@ -1028,13 +1034,14 @@ document.querySelectorAll('.close-video').forEach(closeBtn => {
 });
 
 // Add click/touch event listener to overlay to close
-const handleOverlayClose = () => {
-  resetAllCards();
-  document.body.style.overflow = '';
-};
-
-videoOverlay.addEventListener('click', handleOverlayClose);
-videoOverlay.addEventListener('touchstart', handleOverlayClose, { passive: false });
+if (!isMobile) {
+  const handleOverlayClose = () => {
+    resetAllCards();
+    document.body.style.overflow = '';
+  };
+  videoOverlay.addEventListener('click', handleOverlayClose);
+  videoOverlay.addEventListener('touchstart', handleOverlayClose, { passive: false });
+}
 
 // Add keyboard support (ESC to close) - desktop only
 document.addEventListener('keydown', (e) => {
