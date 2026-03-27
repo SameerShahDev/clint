@@ -15,8 +15,8 @@
 <!-- Open Graph / Social Media -->
 <meta property="og:title" content="Aryan Maurya — Cinematic Video Editor & VFX Artist">
 <meta property="og:description" content="Professional cinematic video editor and VFX artist. Specializing in reels, brand films, and motion graphics with 5+ years of experience.">
-<meta property="og:image" content="https://aryanmaurya.com/assets/aryan-photo.jpg">
-<meta property="og:url" content="https://aryanmaurya.com">
+<meta property="og:image" content="https://aryanmaurya.pages.dev/assets/aryan-photo.jpg">
+<meta property="og:url" content="https://aryanmaurya.pages.dev">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aryan Maurya | Cinematic Video Editor">
 <meta property="og:locale" content="en_US">
@@ -25,11 +25,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Aryan Maurya — Cinematic Video Editor & VFX Artist">
 <meta name="twitter:description" content="Professional cinematic video editor with 5+ years experience in reels, brand films, and VFX.">
-<meta name="twitter:image" content="https://aryanmaurya.com/assets/aryan-photo.jpg">
+<meta name="twitter:image" content="https://aryanmaurya.pages.dev/assets/aryan-photo.jpg">
 <meta name="twitter:site" content="@aryanmaurya">
 
 <!-- Canonical URL -->
-<link rel="canonical" href="https://aryanmaurya.com">
+<link rel="canonical" href="https://aryanmaurya.pages.dev">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -45,8 +45,8 @@
   "name": "Aryan Maurya",
   "jobTitle": "Cinematic Video Editor & VFX Artist",
   "description": "Professional cinematic video editor and VFX artist with 5+ years of experience in reels, brand films, and motion graphics.",
-  "url": "https://aryanmaurya.com",
-  "image": "https://aryanmaurya.com/assets/aryan-photo.jpg",
+  "url": "https://aryanmaurya.pages.dev",
+  "image": "https://aryanmaurya.pages.dev/assets/aryan-photo.jpg",
   "sameAs": [
     "https://instagram.com/aryanmaurya",
     "https://youtube.com/@aryanmaurya",
@@ -882,6 +882,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 // ── VIDEO SOUND MANAGEMENT ──
 const portfolioVideos = document.querySelectorAll('.pc-video');
 let currentPlayingVideo = null;
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 // Initialize videos to auto-play muted in the grid
 portfolioVideos.forEach(video => {
@@ -905,6 +906,11 @@ function muteAllVideos(exceptVideo = null) {
 // Add click event listeners to all videos for sound toggle
 portfolioVideos.forEach(video => {
   video.addEventListener('click', () => {
+    if (isMobile) {
+      const card = video.closest('.pc');
+      if (card) expandCard(card);
+      return;
+    }
     if (video.muted) {
       // Unmute this video and mute all others
       video.muted = false;
@@ -929,7 +935,6 @@ portfolioVideos.forEach(video => {
 const portfolioCards = document.querySelectorAll('.pc');
 const videoOverlay = document.getElementById('videoOverlay');
 let currentExpandedCard = null;
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 function setMuteIcon(btn, muted) {
   if (!btn) return;
